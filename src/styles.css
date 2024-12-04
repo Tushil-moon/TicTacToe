@@ -1,1 +1,35 @@
-/* You can add global styles to this file, and also import other style files */
+:root {
+    /* Define basic variables for colors and sizes */
+    --primary-color: #4834d4;
+    --secondary-color: #e056fd;
+    --accent-color: #ff7675;
+    --bg-color: #f5f6fa;
+    --text-color: #2c3e50;
+    --cell-size: 100px;
+    --mark-size: calc(var(--cell-size) * 0.7);
+    --gradient-start: #686de0;
+    --gradient-end: #30336b;
+    --hover-color: rgba(72, 52, 212, 0.1);
+    --shadow-color: rgba(0, 0, 0, 0.1);
+}
+
+/* Reset default settings */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    /* Background and font settings for body */
+    font-family: 'Tajawal', sans-serif;
+    background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
+    color: var(--text-color);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    position: relative;
+    overflow-x: hidden;
+}

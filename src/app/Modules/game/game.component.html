@@ -1,0 +1,130 @@
+<!-- Main Particles Container -->
+<div class="particles-container" id="particles-js"></div>
+
+<main class="game-container animate__animated animate__fadeIn">
+    <!-- Start Screen -->
+    <section id="startScreen" class="screen" *ngIf="startScreen()">
+        <header class="logo-container">
+            <i class="fas fa-gamepad game-icon"></i>
+            <h1 class="game-title">Tic Tac Toe</h1>
+        </header>
+        <p class="game-description">Enjoy a unique gaming experience with the best version of Tic Tac Toe</p>
+        <button id="startGameBtn" class="btn btn-primary" (click)="startUp()">
+            <i class="fas fa-play"></i>
+            <span>Start Game</span>
+        </button>
+    </section>
+
+    <!-- Symbol Selection Screen -->
+    <section id="chooseRoom" class="screen " *ngIf="chooseRoom()">
+        <h2 class="section-title">Enter Your Name</h2>
+        <div class="input-group">
+            <i class="fas fa-user input-icon"></i>
+            <input type="text" id="playerXName" placeholder="Player Name" class="input" [(ngModel)]="playerName" />
+        </div>
+        <h2 class="section-title">Enter Room Id</h2>
+        <div class="input-group">
+            <i class="fas fa-user input-icon"></i>
+            <input type="text" id="roomId" placeholder="Enter room id" class="input" [(ngModel)]="roomId" />
+        </div>
+
+        <nav class="symbol-buttons">
+            <button id="chooseX" class="btn btn-symbol" (click)="createRoom()">
+                <span class="symbol-label">Create Room</span>
+            </button>
+            <button id="chooseO" class="btn btn-symbol" (click)="joinRoom()">
+                <span class="symbol-label">Join Room</span>
+            </button>
+        </nav>
+    </section>
+
+    <!-- Symbol Selection Screen -->
+    <section id="symbolScreen" class="screen " *ngIf="symbolScreen()">
+        <h2 class="section-title">Choose Your Symbol</h2>
+        <nav class="symbol-buttons">
+            <button id="chooseX" class="btn btn-symbol" (click)="onSymbol('X')">
+                <span class="symbol">X</span>
+                <span class="symbol-label">First Player</span>
+            </button>
+            <button id="chooseO" class="btn btn-symbol" (click)="onSymbol('O')">
+                <span class="symbol">O</span>
+                <span class="symbol-label">Second Player</span>
+            </button>
+        </nav>
+    </section>
+
+
+    <!-- Game Screen -->
+    <section id="gameScreen" class="screen " *ngIf="gameScreen()">
+        @if(room().players.length === 2){
+        <header class="game-header">
+            <div id="gameInfo" class="game-info">
+                <div class="player-details">
+                    <div id="playerXDetails" class="player-detail" [ngClass]="{'active': room().currentTurn === 'X'}">
+                        <i class="fas fa-times player-icon"></i>
+                        <span id="playerXNameDisplay"> {{ getPlayerName('X')}}</span>
+                    </div>
+                    <div class="vs-badge">VS</div>
+
+                    <div id="playerODetails" class="player-detail" [ngClass]="{'active': room().currentTurn === 'O'}">
+                        <i class="far fa-circle player-icon"></i>
+                        <span id="playerONameDisplay">{{ getPlayerName('O')}}</span>
+                    </div>
+
+                </div>
+
+                <div id="status mt-2" class="status animate__animated animate__pulse">Turn of
+                    {{getPlayerName(room().currentTurn)}}</div>
+            </div>
+        </header>
+        }
+
+        <div id="gameBoard" class="game-board">
+            <!-- Game Cells -->
+            @if(room().players.length === 2){
+            <button class="cell" data-cell *ngFor="let cell of room().board; let i = index" (click)="makeMove(i)"
+                [ngClass]="cell ? cell.toLowerCase() : 'empty'">
+            </button>
+            }@else {
+            <div class="d-flex justify-content-between align-items-center">
+                <div class="spinner-border text-primary" role="status">
+                    <span class="sr-only">Loading...</span>
+                </div>
+                <div class=" ms-3">Waiting for another player...</div>
+            </div>
+            }
+        </div>
+
+        <!-- <footer class="score-board">
+            <div class="score-container">
+                <div class="score-label">Score</div>
+                <div class="player-score">
+                    <span id="playerXScore">{{playerXScore()}}</span>
+                    <span class="score-divider">-</span>
+                    <span id="playerOScore">{{playerOScore()}}</span>
+                </div>
+            </div>
+        </footer> -->
+    </section>
+
+    <!-- End Screen -->
+    <section id="endScreen" class="screen animate__animated animate__fadeIn" *ngIf="endScreen()">
+        <div class="end-content">
+            <h2 class="end-title">Game Over!</h2>
+            <div class="trophy-icon">
+                <i class="fas fa-trophy"></i>
+            </div>
+            <div id="endMessage" class="end-message">{{endMessage()}}</div>
+            <nav class="end-buttons">
+                <button id="playAgainBtn" class="btn btn-primary" (click)="restartGame()">
+                    <i class="fas fa-redo"></i>
+                    <span>Play Again</span>
+                </button>
+                <button id="mainMenuBtn" class="btn btn-secondary">
+                    <i class="fas fa-home"></i>
+                    <span>Main Menu</span>
+                </button>
+            </nav>
+        </div>
+    </section>
+</main>
